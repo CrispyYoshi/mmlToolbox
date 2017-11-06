@@ -20,15 +20,18 @@ public class Main {
 		int i = 0;
 		
 		for (String s: args) {
-			if (s == "-mv")
+			if (s.equals("-mv"))
 				shiftVol = false;
+
+			if (s.equals("-vC"))
+				volChanger = Integer.parseInt(args[i+1]);
 			
-			if (s == "-f") {
+			if (s.equals("-f")) {
 				fName = args[i+1];
 			}
 			
 
-			if (s == "-qv")
+			if (s.equals("-qv"))
 				qVolMode = true;
 			
 			i++;
@@ -45,6 +48,7 @@ public class Main {
 		System.out.println("AddMusic MMLToolBox Beta by CrispyYoshi");
 		System.out.println("Usage: java -jar mmlToolbox.jar <flags>"
 				+ "\n-mv: Multiply volume (Instead of shifting it)"
+				+ "\n-vC: Specify value to shift/multiply volume by (Int)"
 				+ "\n-qv: Tweak qXY volume instead of vXXX volume"
 				+ "\n-f <filename>.txt: Text document to open (It will ask otherwise)");
 		
@@ -90,9 +94,13 @@ public class Main {
 	            		if (!qVolMode) {
 		            		if (thisChar == 'v') {
 		            			j++;
-		            			while (line.charAt(j) >= '0' && line.charAt(j) <= '9' && j < line.length() - 1) {
-		            				newVol += line.charAt(j);
-		                			j++;
+		            			try {
+			            			while (line.charAt(j) >= '0' && line.charAt(j) <= '9' && j < line.length() && !line.isEmpty()) {
+			            				newVol += line.charAt(j);
+			                			j++;
+			            			}
+			            			System.out.println(newVol);
+		            			} catch (StringIndexOutOfBoundsException e) {
 		            			}
 		            			j--;
 		            		}
@@ -148,10 +156,8 @@ public class Main {
 	            		}
             		}
             	}
-            	
-            	outText.add(tweakedLine);
-            }   
-
+        	outText.add(tweakedLine);
+        	}
             // Always close files.
             bufferedReader.close();
         }
