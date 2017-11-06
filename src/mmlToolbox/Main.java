@@ -24,7 +24,7 @@ public class Main {
 				shiftVol = false;
 
 			if (s.equals("-vC"))
-				volChanger = Integer.parseInt(args[i+1]);
+				volChanger = Double.parseDouble(args[i+1]);
 			
 			if (s.equals("-f")) {
 				fName = args[i+1];
